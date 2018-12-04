@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import './style.scss';
 
 class HomeComponent extends Component {
     state = {  }
     render() { 
         return ( 
-            <div className='container' id='home-component'>
-                <h1 className='center-align'>Bienvenido</h1>
+            <div id='home-component' className='row center'>
+                <a href="/login" className="waves-effect waves-light btn-large center-align red">Iniciar Sesión</a>
             </div>
         );
     }

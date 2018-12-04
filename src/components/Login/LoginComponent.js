@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './style.scss';
 
 class LoginComponent extends Component {
     constructor(props){
@@ -33,8 +34,8 @@ class LoginComponent extends Component {
 
     render() { 
         return ( 
-            <div id='login-component'>
-                <h1 className="center-align"> Login </h1>
+            <div id='login-component' className='grey darken-4 round-corners'>
+                <h1 className="center-align white-text"> Login </h1>
 
                 {/* Form */}
                 <div className="row">

@@ -43,10 +43,10 @@ class SignupComponent extends Component {
     
     render() {
         return (
-            <div id='signup-component'>
+            <div id='signup-component' className='grey darken-4 round-corners'>
 
                 {/* Signup Title */}
-                <h1 className='center-align'> Signup </h1>
+                <h1 className='center-align white-text'> Signup </h1>
 
                 {/* Form */}
                 <div className="row">
