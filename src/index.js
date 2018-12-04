@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-// Materialize CSS
+// Materialize CSS & JS
 import 'materialize-css/dist/css/materialize.min.css'
-//import M from 'materialize-css/dist/js/materialize.min.js'
+import 'materialize-css/dist/js/materialize.min.js'
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
