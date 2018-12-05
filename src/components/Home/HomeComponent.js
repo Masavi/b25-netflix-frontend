@@ -6,7 +6,10 @@ class HomeComponent extends Component {
     render() { 
         return ( 
             <div id='home-component' className='row center'>
-                <a href="/login" className="waves-effect waves-light btn-large center-align red">Iniciar Sesión</a>
+                <a  href="/login" 
+                    className="waves-effect waves-light btn-large center-align red">
+                    Iniciar Sesión
+                </a>
             </div>
         );
     }

@@ -1,4 +1,21 @@
 import React, { Component } from 'react';
+import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
+
+const REGISTER = gql`
+
+    mutation Register($first_name:String!,$last_name:String!,$email:String!,
+    $password:String!){
+        signup(data:{
+            first_name:$first_name,
+            last_name:$last_name,
+            email:$email,
+            password:$password
+        }){
+            token
+        }
+    }
+`;
 
 class SignupComponent extends Component {
     constructor(props){
@@ -36,82 +53,103 @@ class SignupComponent extends Component {
 
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = (e, signup) => {
         e.preventDefault();
         console.log(this.state);
+        signup({variables:{...this.state}});
+    }
+
+    renderForm(){
+        return (
+
+        <div>
+            {/* First Name & Last Name */ }
+            <div className="row">
+                <div className="input-field col s6">
+                    <input
+                        id="first_name"
+                        type="text"
+                        className="validate"
+                        value={this.state.first_name}
+                        onChange={this.handleInput}
+                    />
+                    <label>First Name</label>
+                </div>
+                <div className="input-field col s6">
+                    <input
+                        id="last_name"
+                        type="text"
+                        className="validate"
+                        value={this.state.last_name}
+                        onChange={this.handleInput}
+                    />
+                    <label>Last Name</label>
+                </div>
+            </div>
+
+            {/* Email */ }
+            <div className="row">
+                <div className="input-field col s12">
+                    <input
+                        id="email"
+                        type="email"
+                        className="validate"
+                        value={this.state.email}
+                        onChange={this.handleInput}
+                    />
+                    <label>Email</label>
+                </div>
+            </div>
+
+            {/* Password */ }
+            <div className="row">
+                <div className="input-field col s12">
+                    <input
+                        id="password"
+                        type="password"
+                        className="validate"
+                        value={this.state.password}
+                        onChange={this.handleInput}
+                    />
+                    <label>Password</label>
+                </div>
+            </div>
+
+            {/* Submit */ }
+            <button className = "btn waves-effect waves-light" type="submit" name="action"> Enviar
+                <i className = "material-icons right" ></i>
+            </button>
+
+        </div>
+        );
     }
     
     render() {
         return (
-            <div id='signup-component' className='grey darken-4 round-corners'>
+            <Mutation mutation={REGISTER}>
+            {
+                (signup, {data, error}) => {
+                    
+                    if(data) console.log(data);
+                    if(error) console.log(error);
 
-                {/* Signup Title */}
-                <h1 className='center-align white-text'> Signup </h1>
+                    return(
+                        <div id='signup-component' className='grey darken-4 round-corners'>
 
-                {/* Form */}
-                <div className="row">
-                    <form className="col s12" onSubmit={this.handleSubmit}>
+                            {/* Signup Title */}
+                            <h1 className='center-align white-text'> Signup </h1>
 
-                        {/* First Name & Last Name */}
-                        <div className="row">
-                            <div className="input-field col s6">
-                                <input 
-                                    id="first_name" 
-                                    type="text" 
-                                    className="validate" 
-                                    value={this.state.first_name}
-                                    onChange={this.handleInput}
-                                />
-                                <label>First Name</label>
-                            </div>
-                            <div className="input-field col s6">
-                                <input 
-                                    id="last_name" 
-                                    type="text" 
-                                    className="validate" 
-                                    value={this.state.last_name}
-                                    onChange={this.handleInput}        
-                                />
-                                <label>Last Name</label>
+                            {/* Form */}
+                            <div className="row">
+                                <form className="col s12" onSubmit={ e => this.handleSubmit(e, signup)}>
+                                    {this.renderForm()}
+                                </form>
                             </div>
                         </div>
-
-                        {/* Email */}
-                        <div className="row">
-                            <div className="input-field col s12">
-                                <input 
-                                    id="email" 
-                                    type="email" 
-                                    className="validate" 
-                                    value={this.state.email}    
-                                    onChange={this.handleInput}
-                                />
-                                <label>Email</label>
-                            </div>
-                        </div>
-
-                        {/* Password */}
-                        <div className="row">
-                            <div className="input-field col s12">
-                                <input 
-                                    id="password" 
-                                    type="password" 
-                                    className="validate" 
-                                    value={this.state.password}
-                                    onChange={this.handleInput}
-                                />
-                                <label>Password</label>
-                            </div>
-                        </div>
-
-                        {/* Submit */}
-                        <button className="btn waves-effect waves-light" type="submit" name="action">Enviar
-                            <i className="material-icons right"></i>
-                        </button>
-
-                    </form>
-                </div>
-            </div>
+                    );
+                }
+            }
+            </Mutation>
         );
     }
 }

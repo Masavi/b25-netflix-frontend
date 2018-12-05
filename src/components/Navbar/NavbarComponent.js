@@ -14,6 +14,7 @@ class Navbar extends Component {
                         <img 
                             src={NetflixLogo}
                             height="25em"
+                            alt="Netflix Logo"
                             />
                     </a>
                     <ul className="right hide-on-med-and-down">
