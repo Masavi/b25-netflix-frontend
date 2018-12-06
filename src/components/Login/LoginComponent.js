@@ -33,49 +33,51 @@ class LoginComponent extends Component {
     }
 
     render() { 
-        return ( 
-            <div id='login-component' className='grey darken-4 round-corners'>
-                <h1 className="center-align white-text"> Login </h1>
+        return (
+            <div className='center-all'>
+                <div id='login-component' className='grey darken-4 round-corners'>
+                    <h1 className="center-align white-text"> Login </h1>
 
-                {/* Form */}
-                <div className="row">
-                    <form className="col s12" onSubmit={this.handleSubmit}>
+                    {/* Form */}
+                    <div className="row">
+                        <form className="col s12" onSubmit={this.handleSubmit}>
 
-                        {/* Email */}
-                        <div className="row">
-                            <div className="input-field col s12">
-                                <input 
-                                    id="email" 
-                                    type="email" 
-                                    className="validate" 
-                                    value={this.state.email}
-                                    onChange={this.handleInput}
-                                />
-                                <label>Email</label>
+                            {/* Email */}
+                            <div className="row">
+                                <div className="input-field col s12">
+                                    <input
+                                        id="email"
+                                        type="email"
+                                        className="validate"
+                                        value={this.state.email}
+                                        onChange={this.handleInput}
+                                    />
+                                    <label>Email</label>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Password */}
-                        <div className="row">
-                            <div className="input-field col s12">
-                                <input 
-                                    id="password" 
-                                    type="password" 
-                                    className="validate" 
-                                    value={this.state.password}
-                                    onChange={this.handleInput}
-                                />
-                                <label>Password</label>
+                            {/* Password */}
+                            <div className="row">
+                                <div className="input-field col s12">
+                                    <input
+                                        id="password"
+                                        type="password"
+                                        className="validate"
+                                        value={this.state.password}
+                                        onChange={this.handleInput}
+                                    />
+                                    <label>Password</label>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Submit */}
-                        <button className="btn waves-effect waves-light" type="submit" name="action">Enviar
+                            {/* Submit */}
+                            <button className="btn waves-effect waves-light" type="submit" name="action">Enviar
                             <i className="material-icons right"></i>
-                        </button>
-                    </form>
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            </div> 
         );
     }
 }

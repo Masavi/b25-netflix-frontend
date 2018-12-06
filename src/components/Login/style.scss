@@ -1,4 +1,14 @@
 .round-corners {
+    max-height: auto;
+    max-width: 80%;
     border-radius: 25px;
     padding: 0 0.5em 0.5em 0.5em;
+    margin: 2em;
+}
+
+.center-all {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

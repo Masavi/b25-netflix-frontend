@@ -5,7 +5,7 @@ class HomeComponent extends Component {
     state = {  }
     render() { 
         return ( 
-            <div id='home-component' className='row center'>
+            <div id='home-component' className='row center flex-container'>
                 <a  href="/login" 
                     className="waves-effect waves-light btn-large center-align red">
                     Iniciar Sesión
