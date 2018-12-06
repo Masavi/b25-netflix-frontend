@@ -46,10 +46,10 @@ class LoginComponent extends Component {
     // Cachamos el token que manda el server
     catchData = (data) => {
         console.log('DATA', data);
-        console.log('SIGNUP', data.signup);
+        console.log('LOGIN', data.login);
 
         // Cachamos el token
-        const token = data.signup.token;
+        const token = data.login.token;
 
         // Almacenamos token en localStorage
         localStorage.setItem('NETFLIX_TOKEN', token);
