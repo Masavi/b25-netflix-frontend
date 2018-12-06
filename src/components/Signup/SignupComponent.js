@@ -59,10 +59,25 @@ class SignupComponent extends Component {
         signup({variables:{...this.state}});
     }
 
+    // Cachamos el token que manda el server
+    catchData = (data) => {
+        console.log('DATA', data);
+        console.log('SIGNUP', data.signup);
+        
+        // Cachamos el token
+        const token = data.signup.token;
+
+        // Almacenamos token en localStorage
+        localStorage.setItem('NETFLIX_TOKEN', token);
+
+        // Redireccionar a home tras signup exitoso
+        this.props.history.push('/');
+    }
+
     renderForm(){
         return (
 
-        <div>
+        <React.Fragment>
             {/* First Name & Last Name */ }
             <div className="row">
                 <div className="input-field col s6">
@@ -120,7 +135,7 @@ class SignupComponent extends Component {
                 <i className = "material-icons right" ></i>
             </button>
 
-        </div>
+        </React.Fragment>
         );
     }
     
@@ -129,8 +144,9 @@ class SignupComponent extends Component {
             <Mutation mutation={REGISTER}>
             {
                 (signup, {data, error}) => {
-                    
-                    if(data) console.log(data);
+            
+                    //if(data) console.log(data);
+                    if (data) this.catchData(data)
                     if(error) console.log(error);
 
                     return(

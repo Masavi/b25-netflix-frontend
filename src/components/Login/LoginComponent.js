@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
 import './style.scss';
+
+const LOGIN = gql`
+    mutation LOGIN($email:String!,$password:String!){
+        login(email:$email,password:$password){
+            token
+        }
+    }
+`
 
 class LoginComponent extends Component {
     constructor(props){
@@ -27,57 +37,92 @@ class LoginComponent extends Component {
 
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = (e, login) => {
         e.preventDefault();
         console.log(this.state);
+        login({variables:{...this.state}});
+    }
+
+    // Cachamos el token que manda el server
+    catchData = (data) => {
+        console.log('DATA', data);
+        console.log('SIGNUP', data.signup);
+
+        // Cachamos el token
+        const token = data.signup.token;
+
+        // Almacenamos token en localStorage
+        localStorage.setItem('NETFLIX_TOKEN', token);
+
+        // Redireccionar a home tras signup exitoso
+        this.props.history.push('/');
+    }
+
+    renderForm() {
+        return (
+        <React.Fragment>
+            {/* Email */ }
+            <div className="row">
+                <div className="input-field col s12">
+                    <input
+                        id="email"
+                        type="email"
+                        className="validate"
+                        value={this.state.email}
+                        onChange={this.handleInput}
+                    />
+                    <label>Email</label>
+                </div>
+            </div>
+
+            {/* Password */ }
+            <div className="row">
+                <div className="input-field col s12">
+                    <input
+                        id="password"
+                        type="password"
+                        className="validate"
+                        value={this.state.password}
+                        onChange={this.handleInput}
+                    />
+                    <label>Password</label>
+                </div>
+            </div>
+
+            {/* Submit */ }
+            <button className="btn waves-effect waves-light" type="submit" name="action"> Enviar
+                <i className="material-icons right"></i>
+            </button>
+        </React.Fragment>
+        );
     }
 
     render() { 
         return (
-            <div className='center-all'>
-                <div id='login-component' className='grey darken-4 round-corners'>
-                    <h1 className="center-align white-text"> Login </h1>
+            <Mutation mutation={LOGIN}>
+            {
+                (login, {data, error}) => {
+                
+                    if (data) this.catchData(data);
+                    if (error) console.log(error);
 
-                    {/* Form */}
-                    <div className="row">
-                        <form className="col s12" onSubmit={this.handleSubmit}>
+                    return (
+                        <div className='center-all'>
+                            <div id='login-component' className='grey darken-4 round-corners'>
+                                <h1 className="center-align white-text"> Login </h1>
 
-                            {/* Email */}
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <input
-                                        id="email"
-                                        type="email"
-                                        className="validate"
-                                        value={this.state.email}
-                                        onChange={this.handleInput}
-                                    />
-                                    <label>Email</label>
+                                {/* Form */}
+                                <div className="row">
+                                    <form className="col s12" onSubmit={ e => this.handleSubmit(e, login)}>
+                                        {this.renderForm()}
+                                    </form>
                                 </div>
                             </div>
-
-                            {/* Password */}
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <input
-                                        id="password"
-                                        type="password"
-                                        className="validate"
-                                        value={this.state.password}
-                                        onChange={this.handleInput}
-                                    />
-                                    <label>Password</label>
-                                </div>
-                            </div>
-
-                            {/* Submit */}
-                            <button className="btn waves-effect waves-light" type="submit" name="action">Enviar
-                            <i className="material-icons right"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div> 
+                        </div> 
+                    );
+                }
+            }
+            </Mutation>
         );
     }
 }
