@@ -1,37 +1,49 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Query }  from 'react-apollo';
+import Card from './CardComponent';
 
-const GET_MOVIES = gql`
-    {
-        allMovies {
-            _id
-            name
+const ALLMOVIES = gql`
+    query{
+        allMovies{
+            _id,
+            name,
             director
         }
     }
 `
 
-class BrowseComponent extends Component {
-    state = {  }
-    render() { 
-        return ( 
-            <Query query={GET_MOVIES}>
-                {
-                    ({loading, error, data}) => {
-                        if (loading) return console.log("Loading...");
-                        if (error) return console.log(`Error! ${error}`);
-                        return (
-                            <div>
-                                <h1>Catálogo</h1>
-                                {console.log(data)}
-                            </div>
-                        );
+export default class BrowseComponent extends Component {
+
+  render() {
+    return (
+        <div className="container">
+            <div className="row">
+
+                <Query query={ALLMOVIES}>
+                    {
+                        ({data, error, loading}) => {
+                            if(error) return <h4 className='center-align white-text'>{"Hubo un Error !! :("}</h4>
+                            if (loading) return <h4 className='center-align white-text'>Cargando ...</h4>
+
+                            const movies = data.allMovies.map( (movie,index) => (
+                                <div className="col s4" key={index}>
+                                    <Card 
+                                    title = {movie.name}
+                                    director = {movie.director}
+                                    />
+                                </div>
+                            ))   
+                            return(
+                                <React.Fragment>
+                                    {movies}
+                                </React.Fragment>
+                            )
+                        }
                     }
-                }
-            </Query>
-        );
-    }
+                </Query>
+            </div>
+        </div>
+    )
+  }
 }
-    
-export default BrowseComponent;
